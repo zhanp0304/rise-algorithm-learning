@@ -17,6 +17,49 @@ package org.rise.learning.leetcode.array;
  */
 public class RemoveElement_27 {
 
+    /**
+     * 自己做的解法既移除了元素，又keep住原来的顺序（因为采用swap交换)；但实际上题目并不要求元素顺序，只需要移除，并将数组收窄即可
+     * <p>第一种解法的内存占用较多，因为用swap的话，就需要中间变量，就会占用多一份内存</p>
+     *
+     * <p>怎样才可以不swap，也能移除元素呢？把slow指针做第一位，fast指针起始放最后一位，然后两个夹逼靠拢的时候，即可。是的，这样会破坏元素顺序，
+     * 不过题目不要求元素顺序，所以完全可以这么做</p>
+     *
+     * <p>双指针既可以从0同步开始，也可从0和n-1靠拢</p>
+     *
+     * @param nums nums
+     * @param val  val
+     * @return length
+     */
+    public static int removeElementOptimize(int[] nums, int val) {
+        int i = 0;
+        int j = nums.length - 1;
+
+        while (i < j) {
+            if (nums[i] == val) {
+                while (nums[j] == val && j > i) {
+                    j--;
+                }
+                if (j <= i) {
+                    break;
+                }
+                nums[i] = nums[j];
+                j--;
+            }
+            if (i + 1 <= j) {
+                i++;
+            }
+        }
+
+        // 最后一个元素的判断, 若match, 则length + 1
+        if (i == j && nums[i] != val) {
+            return i + 1;
+        }
+
+        // the last one not matched, so length + 1
+        return i;
+    }
+
+
     public static int removeElement(int[] arr, int target) {
         int i = 0;
         int j = 0;
@@ -63,7 +106,7 @@ public class RemoveElement_27 {
         ints[6] = 4;
         ints[7] = 2;
 
-        int i = removeElement(ints, 2);
+        int i = removeElementOptimize(ints, 2);
         System.out.println(i);
     }
 }
