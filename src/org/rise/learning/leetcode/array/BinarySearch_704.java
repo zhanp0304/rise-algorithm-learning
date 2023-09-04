@@ -9,10 +9,34 @@ package org.rise.learning.leetcode.array;
  */
 public class BinarySearch_704 {
 
+
+    public static int findTargetIndexOptimize(int[] ascSortedArr, int target) {
+        int low = 0;
+        int high = ascSortedArr.length - 1;
+        while (low <= high) {
+            // 防止溢出，需要替换为较小值 (a + b) / 2 = (a + (a + b -a)) / 2 = (2a + (b-a)) / 2 = a + (b - a)/2
+            int mid = low + (high - low) / 2;
+            int midValue = ascSortedArr[mid];
+
+            if (midValue < target) {
+                low = mid + 1;
+            } else if (midValue > target) {
+                high = mid - 1;
+            } else {
+                // target found
+                return mid;
+            }
+        }
+        // target not found
+        return -1;
+    }
+
+
     public static int findTargetIndex(int[] ascSortedArr, int target) {
         int low = 0;
         int high = ascSortedArr.length - 1;
         while (low <= high) {
+            // FIXME: 这里可能会存在溢出的可能性
             int mid = (low + high) / 2;
             int midValue = ascSortedArr[mid];
 
@@ -34,7 +58,7 @@ public class BinarySearch_704 {
         for (int i = 0; i < 10; i++) {
             ints[i] = i * 10;
         }
-        int targetIndex = findTargetIndex(ints, 10);
+        int targetIndex = findTargetIndexOptimize(ints, 30);
         System.out.println(targetIndex);
     }
 }
