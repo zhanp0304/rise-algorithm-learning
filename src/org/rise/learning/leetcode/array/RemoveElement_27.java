@@ -17,6 +17,22 @@ package org.rise.learning.leetcode.array;
  */
 public class RemoveElement_27 {
 
+    public static int removeElementUltra(int[] nums, int val) {
+        // fast -> to find every single matched target, and copy it to the final result array range[0, slow)
+        int slow = 0;
+        for (int fast = 0; fast < nums.length; fast++) {
+            if (nums[fast] != val) {
+                if (fast != slow) {
+                    nums[slow] = nums[fast];
+                }
+                slow++;
+            }
+        }
+
+        // [0, slow-1] -> is the final result array range
+        return slow;
+    }
+
     /**
      * 自己做的解法既移除了元素，又keep住原来的顺序（因为采用swap交换)；但实际上题目并不要求元素顺序，只需要移除，并将数组收窄即可
      * <p>第一种解法的内存占用较多，因为用swap的话，就需要中间变量，就会占用多一份内存</p>
@@ -106,7 +122,7 @@ public class RemoveElement_27 {
         ints[6] = 4;
         ints[7] = 2;
 
-        int i = removeElementOptimize(ints, 2);
+        int i = removeElementUltra(ints, 2);
         System.out.println(i);
     }
 }
