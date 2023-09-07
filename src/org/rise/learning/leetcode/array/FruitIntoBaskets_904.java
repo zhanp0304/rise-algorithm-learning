@@ -28,4 +28,13 @@ public class FruitIntoBaskets_904 {
         }
         return maxTotalFruits;
     }
+
+    public static void main(String[] args) {
+        int minLength = Integer.MAX_VALUE;
+        String s = "";
+        int minLeft = 0;
+        int minRight = 0;
+        String s1 = minLength == Integer.MAX_VALUE ? "" : s.substring(minLeft, minRight - 1);
+        System.out.println(s1);
+    }
 }
