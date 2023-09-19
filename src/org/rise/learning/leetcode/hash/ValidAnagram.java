@@ -1,4 +1,4 @@
-package org.rise.learning.leetcode.string;
+package org.rise.learning.leetcode.hash;
 
 import java.util.HashMap;
 import java.util.Map;
