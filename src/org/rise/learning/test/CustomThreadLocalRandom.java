@@ -14,15 +14,9 @@ public class CustomThreadLocalRandom {
     private SplittableRandom splittableRandom;
 
     private CustomThreadLocalRandom() {
-        try {
-            SecureRandom secureRandom = SecureRandom.getInstanceStrong();
-            // 8 bytes for a long seed
-            byte[] seedBytes = secureRandom.generateSeed(8);
-            seed.set(bytesToLong(seedBytes));
-            splittableRandom = new SplittableRandom(seed.get());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("SecureRandom initialization failed.", e);
-        }
+        byte[] seedBytes = SecureRandom.getSeed(8);
+        this.seed.set(bytesToLong(seedBytes));
+        splittableRandom = new SplittableRandom(this.seed.get());
     }
 
     public static void remove() {
